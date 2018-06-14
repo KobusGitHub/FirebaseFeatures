@@ -5,7 +5,7 @@
     "short_name": "FirebaseFeatures",
     "description": "FirebaseFeatures",
     "orientation": "any",
-    "start_url": "http://localhost:8080/",
+    "start_url": "http://localhost:3000/",
     "icons": [
         {
             "src": "/assets/favicon/android-chrome-192x192.png",

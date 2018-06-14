@@ -1,0 +1,46 @@
+<div class="flex-container" fxLayout="row" fxLayoutAlign="center center" style="padding-bottom:60px;">
+  <div flex-gt-md="50" flex="100">
+    <mat-card>
+      <mat-card-title>
+        Persons
+      </mat-card-title>
+
+      <mat-card-content style="margin-bottom:0px;" flex fxLayout="column">
+        <mat-list>
+
+          <mat-list-item>
+            <div flex="30" fxFlexAlign="center" class="listHeading">
+              Id
+            </div>
+            <div flex="30" fxFlexAlign="center" class="listHeading">
+              Name
+            </div>
+            <div flex fxFlexAlign="center" class="listHeading">
+              Comment
+            </div>
+          </mat-list-item>
+
+          <mat-list-item *ngFor="let record of persons" (click)="detailClick(record)" class="hand">
+            <div flex="30" fxFlexAlign="center">
+              {{record.guidId}}
+            </div>
+            <div flex="30" fxFlexAlign="center">
+              {{record.name}}
+            </div>
+            <div flex fxFlexAlign="center">
+              {{record.comment}}
+            </div>
+            
+          </mat-list-item>
+          
+        </mat-list>
+
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+</div>
+
+<a mat-fab routerLink="/persons/0" color="primary" style="top:auto; right:15px; left:auto; bottom:50px; position:fixed;">
+  <mat-icon>add</mat-icon>
+</a>

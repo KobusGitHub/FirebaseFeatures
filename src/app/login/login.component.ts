@@ -29,20 +29,21 @@ export class LoginComponent implements OnInit {
     }
 
     login(): void {
+        this._router.navigate(['/']);
 
-        this._loadingService.register();
+        // this._loadingService.register();
 
-        this._authStore.login({ userName: this.username, password: this.password }).subscribe(
-            (token) => {
-                this._router.navigate(['/']);
-                this._loadingService.resolve();
-                this._notificationService.displayMessage('Welcome back ' + (token.firstName ? token.firstName : token.username) + '!');
-            },
-            (error) => {
-                this._loadingService.resolve();
-                let errorMessage = this._httpErrorService.handleHttpError(error);
-            }
-        );
+        // this._authStore.login({ userName: this.username, password: this.password }).subscribe(
+        //     (token) => {
+        //         this._router.navigate(['/']);
+        //         this._loadingService.resolve();
+        //         this._notificationService.displayMessage('Welcome back ' + (token.firstName ? token.firstName : token.username) + '!');
+        //     },
+        //     (error) => {
+        //         this._loadingService.resolve();
+        //         let errorMessage = this._httpErrorService.handleHttpError(error);
+        //     }
+        // );
     }
 
     forgotPassword() {

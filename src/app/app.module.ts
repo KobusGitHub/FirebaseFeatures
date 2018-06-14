@@ -18,16 +18,31 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { CreateUserComponent, UserDetailComponent, UserRolesComponent } from './users';
 
+import { MatDialogModule } from '@angular/material';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
+import { PersonsComponent } from './persons/persons.component';
+import { PersonComponent } from './persons/person/person.component';
+import { PersonFirebaseServiceProvider } from '../services/firebase/person-firebase-service-provider';
+
 const httpInterceptorProviders: Type<any>[] = [RequestInterceptor];
 
 @NgModule({
-    declarations: [AppComponent, routedComponents, HomeComponent, CreateUserComponent, UserDetailComponent, UserRolesComponent],
+    declarations: [AppComponent, routedComponents, HomeComponent, CreateUserComponent, UserDetailComponent, UserRolesComponent,
+        PersonsComponent, PersonComponent],
     imports: [
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFirestoreModule.enablePersistence(),
+        // AngularFirestoreModule,
+        AngularFireAuthModule,
         AppRoutingModule,
-        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
         BrowserModule,
         BrowserAnimationsModule,
         SharedModule,
+        ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
         // DynamicDashboardsModule.forRoot(environment.webApiBaseAddress),
         CommonModule,
         InfiniteScrollModule,
@@ -39,7 +54,8 @@ const httpInterceptorProviders: Type<any>[] = [RequestInterceptor];
                     paths: ['**']
                 }
             ]
-        })
+        }),
+        MatDialogModule
     ],
     providers: [
         httpInterceptorProviders,
@@ -51,10 +67,11 @@ const httpInterceptorProviders: Type<any>[] = [RequestInterceptor];
         AuthStore,
         RolesService,
         UsersService,
-        UsersStore
+        UsersStore,
+        PersonFirebaseServiceProvider
     ],
     exports: [],
     bootstrap: [AppComponent],
     entryComponents: [CreateUserComponent]
 })
-export class AppModule {}
+export class AppModule { }

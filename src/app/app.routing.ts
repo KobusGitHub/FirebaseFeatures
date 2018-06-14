@@ -11,6 +11,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 // import { DynamicDashboardsContainerComponent, DynamicWidgetDetailComponent } from '@sgits/dynamic-dashboards';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PersonsComponent } from './persons/persons.component';
+import { PersonComponent } from './persons/person/person.component';
 
 const routes: Routes = [
     {
@@ -41,6 +43,19 @@ const routes: Routes = [
             //     canActivate: [RouteGuard],
             //     data: { roles: [], url: '', title: 'Widget Detail', icon: '', show: false, seq: 0 }
             // },
+            {
+                path: 'persons',
+                component: PersonsComponent,
+                canActivate: [RouteGuard],
+                data: { roles: [], url: '/persons', title: 'Persons', icon: 'person', show: true, seq: 3 }
+            },
+            {
+                path: 'persons/:id',
+                component: PersonComponent,
+                canActivate: [RouteGuard],
+                data: { roles: [], url: '', title: 'Person', icon: 'person', show: false, seq: 0 }
+            },
+
             {
                 path: 'users',
                 component: UsersComponent,
