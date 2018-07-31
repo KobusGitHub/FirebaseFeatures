@@ -6,6 +6,9 @@ import { TdLoadingService } from '@covalent/core';
 import { AuthStore } from '../../stores';
 import { HttpErrorService } from '../../services';
 import { SgNotificationService } from '../../components';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthFirebaseServiceProvider } from '../../services/firebase/auth-firebase-service-provider';
+import { FirebaseCallbackModel } from '../../models';
 
 @Component({
     selector: 'app-login',
@@ -15,7 +18,7 @@ import { SgNotificationService } from '../../components';
 export class LoginComponent implements OnInit {
 
     appTitle: string = environment.appTitle;
-    username: string;
+    email: string;
     password: string;
 
     constructor(
@@ -25,25 +28,33 @@ export class LoginComponent implements OnInit {
         private _notificationService: SgNotificationService,
         private _authStore: AuthStore,
         private _sgNotificationService: SgNotificationService,
-        private _httpErrorService: HttpErrorService) {
+        private _httpErrorService: HttpErrorService,
+        private afAuth: AngularFireAuth,
+        private authFirebaseService: AuthFirebaseServiceProvider) {
+        this.authFirebaseService.logout((e) => this.logoutCallback(e));
     }
 
+    logoutCallback(sqliteCallbackModel: FirebaseCallbackModel) {
+        if (sqliteCallbackModel.success) {
+            this._notificationService.displayMessage('Logged out successfully');
+            return;
+        }
+        this._notificationService.displayMessage('Logged in unsuccessfully');
+    }
     login(): void {
-        this._router.navigate(['/']);
+        // un: jacobusjonker@gmail.com
+        // pw: Passw0rd!
+        this.authFirebaseService.loginWithEmailPassword(this.email, this.password, (e) => this.loginWithEmailPasswordCallback(e));
+    }
 
-        // this._loadingService.register();
-
-        // this._authStore.login({ userName: this.username, password: this.password }).subscribe(
-        //     (token) => {
-        //         this._router.navigate(['/']);
-        //         this._loadingService.resolve();
-        //         this._notificationService.displayMessage('Welcome back ' + (token.firstName ? token.firstName : token.username) + '!');
-        //     },
-        //     (error) => {
-        //         this._loadingService.resolve();
-        //         let errorMessage = this._httpErrorService.handleHttpError(error);
-        //     }
-        // );
+    loginWithEmailPasswordCallback(sqliteCallbackModel: FirebaseCallbackModel) {
+        if (sqliteCallbackModel.success) {
+            this._notificationService.displayMessage('Logged in successfully');
+            localStorage.setItem('shareToken', sqliteCallbackModel.data.uid);
+            this._router.navigate(['/']);
+        } else {
+            this._notificationService.displayMessage(sqliteCallbackModel.data.message);
+        }
     }
 
     forgotPassword() {

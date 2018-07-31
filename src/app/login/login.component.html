@@ -18,7 +18,7 @@
                         <form #loginForm="ngForm" (ngSubmit)="login()">
                             <div fxLayout="row">
                                 <mat-input-container fxFlex="100" class="input-lg">
-                                    <input matInput #userControl="ngModel" placeholder="Username" type="text" name="username" [(ngModel)]="username" required>
+                                    <input matInput #userControl="ngModel" placeholder="email" type="text" name="email" [(ngModel)]="email" required>
                                     <span matPrefix>
                                         <mat-icon>person</mat-icon>
                                     </span>

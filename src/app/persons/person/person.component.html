@@ -24,6 +24,7 @@
           </mat-list>
         </form>
 
+        <app-file-upload [showDrowZone]="true" [showImage]="true" (uploadedUrlChange)="uploaded($event)"></app-file-upload>
       </mat-card-content>
       <mat-dialog-actions>
           <div style="text-align: right; width:100%;">

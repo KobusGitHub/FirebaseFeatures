@@ -13,6 +13,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { PersonsComponent } from './persons/persons.component';
 import { PersonComponent } from './persons/person/person.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { SendEmailComponent } from './send-email/send-email.component';
 
 const routes: Routes = [
     {
@@ -43,6 +45,18 @@ const routes: Routes = [
             //     canActivate: [RouteGuard],
             //     data: { roles: [], url: '', title: 'Widget Detail', icon: '', show: false, seq: 0 }
             // },
+            {
+                path: 'file-upload',
+                component: FileUploadComponent,
+                canActivate: [RouteGuard],
+                data: { roles: [], url: '/file-upload', title: 'file-upload', icon: 'person', show: true, seq: 3 }
+            },
+            {
+                path: 'send-email',
+                component: SendEmailComponent,
+                canActivate: [RouteGuard],
+                data: { roles: [], url: '/send-email', title: 'send-email', icon: 'person', show: true, seq: 3 }
+            },
             {
                 path: 'persons',
                 component: PersonsComponent,

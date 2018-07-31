@@ -18,9 +18,10 @@
             <div flex fxFlexAlign="center" class="listHeading">
               Comment
             </div>
+          <mat-divider></mat-divider>
+            
           </mat-list-item>
-
-          <mat-list-item *ngFor="let record of persons" (click)="detailClick(record)" class="hand">
+          <mat-list-item *ngFor="let record of persons" (click)="detailClick(record)" class="hand" style="height: auto;">
             <div flex="30" fxFlexAlign="center">
               {{record.guidId}}
             </div>
@@ -30,7 +31,7 @@
             <div flex fxFlexAlign="center">
               {{record.comment}}
             </div>
-            
+            <mat-divider></mat-divider>
           </mat-list-item>
           
         </mat-list>

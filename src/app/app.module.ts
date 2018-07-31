@@ -23,21 +23,28 @@ import { MatDialogModule } from '@angular/material';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { PersonsComponent } from './persons/persons.component';
 import { PersonComponent } from './persons/person/person.component';
 import { PersonFirebaseServiceProvider } from '../services/firebase/person-firebase-service-provider';
+import { DropZoneDirective } from './file-upload/directives/drop-zone.directive';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { FileSizePipe } from './file-upload/pipes/file-size.pipe';
+import { SendEmailComponent } from './send-email/send-email.component';
+import { AuthFirebaseServiceProvider } from '../services/firebase/auth-firebase-service-provider';
 
 const httpInterceptorProviders: Type<any>[] = [RequestInterceptor];
 
 @NgModule({
     declarations: [AppComponent, routedComponents, HomeComponent, CreateUserComponent, UserDetailComponent, UserRolesComponent,
-        PersonsComponent, PersonComponent],
+        PersonsComponent, PersonComponent, DropZoneDirective, FileUploadComponent, FileSizePipe, SendEmailComponent],
     imports: [
         AngularFireModule.initializeApp(environment.firebase),
         AngularFirestoreModule.enablePersistence(),
         // AngularFirestoreModule,
         AngularFireAuthModule,
+        AngularFireStorageModule,
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
@@ -68,7 +75,8 @@ const httpInterceptorProviders: Type<any>[] = [RequestInterceptor];
         RolesService,
         UsersService,
         UsersStore,
-        PersonFirebaseServiceProvider
+        PersonFirebaseServiceProvider,
+        AuthFirebaseServiceProvider
     ],
     exports: [],
     bootstrap: [AppComponent],

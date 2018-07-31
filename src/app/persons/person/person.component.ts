@@ -103,4 +103,11 @@ export class PersonComponent implements OnInit {
     return uuid;
   }
 
+  uploaded(event) {
+    // console.log(event.id);
+    // console.log(event.imageUrl);
+    this._snackBarService.open('Uploaded successfully: ' + event.id, undefined, { duration: 3000 });
+
+  }
+
 }

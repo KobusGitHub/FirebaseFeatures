@@ -3,6 +3,7 @@ import { PersonFirebaseServiceProvider } from '../../services';
 import { FirebaseCallbackModel, PersonModel } from '../../models';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthFirebaseServiceProvider } from '../../services/firebase/auth-firebase-service-provider';
 
 @Component({
   selector: 'app-persons',
@@ -15,14 +16,30 @@ export class PersonsComponent implements OnInit {
   constructor(private _snackBarService: MatSnackBar,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private personFirbaseService: PersonFirebaseServiceProvider) { }
+    private personFirbaseService: PersonFirebaseServiceProvider,
+    private firebaseAuthService: AuthFirebaseServiceProvider) { }
 
   ngOnInit() {
-    this.loadData();
+    this.firebaseAuthService.getCurrentSignedInUser((x) => this.getCurrentUserCallback(x));
   }
 
   loadData() {
     this.personFirbaseService.getAll((x) => this.getAllCallback(x));
+  }
+
+  getCurrentUserCallback(result: FirebaseCallbackModel) {
+    if (result.success) {
+      console.log('getCurrentUserCallback');
+      console.log(result.data);
+
+      if (result.data) {
+        this.loadData();
+      }
+
+      return;
+    }
+    this._snackBarService.open('Error getting data', undefined, { duration: 3000 });
+
   }
 
   getAllCallback(result: FirebaseCallbackModel) {
@@ -35,7 +52,7 @@ export class PersonsComponent implements OnInit {
   }
 
   detailClick(record) {
-    this._router.navigate(['/persons/' + record.guidId ]);
+    this._router.navigate(['/persons/' + record.guidId]);
 
   }
 }
